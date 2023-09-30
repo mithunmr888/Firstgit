@@ -28,8 +28,5 @@ headerTitle.innerHTML ='<h3>Hello</h3>';
 header.style.borderBottom = 'solid 3px #000';
 headerTitle.style.borderBottom = 'solid 3px #000';
 
-var additem = document.getElementById('main');
-console.log(additem);
 
-document.all[10].textContent = 'Hello';
 
