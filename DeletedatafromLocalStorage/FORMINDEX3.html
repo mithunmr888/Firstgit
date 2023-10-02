@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            background-color: blanchedalmond;
+            text-align: center;
+            border: 6px;
+        }
+        input{
+            font-size: 30px;
+            border: 10px brown;
+            color: black;
+            width: 900px;
+            margin: 10px;
+            padding: 1px;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(203, 185, 157);">
+    <form onsubmit="onsignup(event)">
+        <fieldset>
+            <legend>Book a call</legend>
+            <label for="fname">User Name:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="email">email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="pword">Password:</label><br>
+            <input type="password" id="pword" name="pword"><br>
+            <label for="dword">Date and Time for Call:</label><br>
+            <input type="datetime-local" id="dword" name="dword" style="font-size: 30px;"><br>
+            <label for="submit">Submit:</label><br>
+            <input type="submit" id="submit" name="submit" value="Get a call"><br>
+        </fieldset>
+    </form>
+    <ul id="listofitems">
+    </ul>
+    <script src="FORMINDEX3.js"></script>
+</body>
+</html>
