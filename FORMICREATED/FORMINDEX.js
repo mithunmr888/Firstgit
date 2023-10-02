@@ -20,6 +20,7 @@ function onsignup(event) {
 
     // Store the JSON string in local storage
     localStorage.setItem('userDetails', userDetailsJSON);
+    //console.log(userDetailsJSON);
 
     // Optional: Provide some feedback to the user
     alert('Details stored successfully!');
