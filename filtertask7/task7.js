@@ -18,6 +18,9 @@ function addItem(e){
     //create input value
     var newitem = document.getElementById('item').value;
 
+    //add description
+    newdescription = document.getElementById('description').value;
+
     //create new li element
     var li = document.createElement('li');
 
@@ -26,6 +29,9 @@ function addItem(e){
 
     //add text node with input value
     li.appendChild(document.createTextNode(newitem));
+
+    //append to li
+    li.appendChild(document.createTextNode(" " + newdescription));
     
     //create delete button
     var deletebtn = document.createElement('button');
@@ -40,13 +46,13 @@ function addItem(e){
     li.appendChild(deletebtn);
 
     // create edit button
-    //var editbtn = document.createElement('button');
+    var editbtn = document.createElement('button');
 
     // add class to editbtn
-   // editbtn.className = 'btn btn-info btn-sm float-right edit';
+   editbtn.className = 'btn btn-info btn-sm float-right edit';
 
     // append text node
-   // editbtn.appendChild(document.createTextNode('Edit'));
+   editbtn.appendChild(document.createTextNode('Edit'));
 
     // append button to li
     li.appendChild(editbtn);
@@ -80,8 +86,9 @@ function filteritems(e){
     //convert array
     Array.from(items).forEach(function(item){
         var itemname = item.firstChild.textContent;
+        var desc = item.childNodes[1].textContent;
         //console.log(itemname);
-        if(itemname.toLowerCase().indexOf(text) != -1){
+        if(itemname.toLowerCase().indexOf(text) != -1 || desc.toLowerCase().indexOf(text) != -1){
             item.style.display = 'block';
         }else{
             item.style.display = 'none';
