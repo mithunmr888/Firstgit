@@ -1,3 +1,6 @@
+//axios global
+axios.defaults.headers.common['X-Auth-Token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
 // GET REQUEST
 function getTodos() {
     /*axios({
@@ -9,7 +12,7 @@ function getTodos() {
     })
     .then(res => showOutput(res))
     .catch(err => console.error(err));*/
-    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5')
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5', {timeout: 5000})
     .then(res => showOutput(res))
     .catch(err => console.error(err));
     
@@ -89,17 +92,63 @@ function getTodos() {
   
   // TRANSFORMING REQUESTS & RESPONSES
   function transformResponse() {
-    const options = 
+    /*const options = {
+        method: 'post',
+        url: 'https://jsonplaceholder.typicode.com/todos';
+        data: {
+            title: 'Hello World'
+        },
+        transformResponse: axios.defaults.transformResponse.concat(data => {
+            data.title = data.title.toUpperCase();
+            return data;
+        })
+    };
+    axios(options).then(res => showOutput(res))*/
   }
   
   // ERROR HANDLING
   function errorHandling() {
-    console.log('Error Handling');
+    axios.get('https://jsonplaceholder.typicode.com/todoss', {
+       // ValidateStatus: function(status){
+       //     return status< 500; //reject only if status is greater or equal to 500
+       // }
+    })
+    .then(res => showOutput(res))
+    .catch(err => {
+        if(err.response){
+            //server responded with a status otherthan 200 range
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+
+            if(err.response.status === 404){
+                alert('Error: Page Not Found')
+            }
+        }else if(err.request){
+            //request was made but no response
+            console.log(err.request);
+        }else{
+            console.log(err.message);
+        }
+    });
   }
   
   // CANCEL TOKEN
   function cancelToken() {
-    console.log('Cancel Token');
+    const source = axios.CancelToken.source();
+    axios.get('https://jsonplaceholder.typicode.com/todos', {
+        cancelToken: source.token
+    })
+    .then(res => showOutput(res))
+    .catch(thrown => {
+        if(axios.isCancel(thrown)){
+            console.log('Request canceled', thrown.message)
+        }
+    })
+
+    if(true){
+        source.cancel('Request canceled!')
+    }
   }
   
   // INTERCEPTING REQUESTS & RESPONSES
@@ -113,7 +162,13 @@ function getTodos() {
   )
   
   // AXIOS INSTANCES
+  const axiosInstance = axios.create({
+    //other custom settings
+    baseURL: 'https://jsonplaceholder.typicode.com'
+  })
   
+  //axiosInstance.get('/comments').then(res => showOutput(res));
+
   // Show output in browser
   function showOutput(res) {
     document.getElementById('res').innerHTML = `
