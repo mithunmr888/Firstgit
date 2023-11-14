@@ -92,36 +92,59 @@
 
         })
 
-        function showuseronscreen(obj){
-            const parentelem = document.getElementById('listofitems');
-            const childelem = document.createElement('li');
-            childelem.textContent = `username: ${obj.username}  useremail: ${obj.useremail}  userpassword: ${obj.userpassword}
-              userdatetime: ${obj.userdatetime}`
+        function showuseronscreen(obj) {
+        const parentelem = document.getElementById('listofitems');
+        const childelem = `<li id="${obj._id}"> username: ${obj.username}  useremail: ${obj.useremail}  userpassword: ${obj.userpassword}
+              userdatetime: ${obj.userdatetime} <button onclick="deleteuser('${obj._id}')">Delete</button>
+              <button onclick="edituser('${obj._id}')">Edit</button></li>`;
 
-              const deletebtn = document.createElement('input');
-              deletebtn.type = 'button';
-              deletebtn.value = 'Delete';
-              deletebtn.onclick = () => {
-                localStorage.removeItem(obj.username);
-                parentelem.removeChild(childelem);
-              }
+        parentelem.innerHTML += childelem;
+    }
 
-              const editbtn = document.createElement('input');
-              editbtn.type = 'button';
-              editbtn.value = 'Edit';
-              editbtn.onclick = () => {
-                localStorage.removeItem(obj.username);
-                parentelem.removeChild(childelem);
+              //const deletebtn = document.createElement('input');
+              //deletebtn.type = 'button';
+              //deletebtn.value = 'Delete';
+              //deletebtn.onclick = () => {
+               // localStorage.removeItem(obj.username);
+               // parentelem.removeChild(childelem);
+             // }
 
-                document.getElementById("fname").value = obj.username;
-                document.getElementById("email").value = obj.useremail
-                document.getElementById("pword").value = obj.userpassword;
-                document.getElementById("dword").value = obj.datetime;
-              }
-              childelem.appendChild(deletebtn);
-              childelem.appendChild(editbtn);
-              parentelem.appendChild(childelem);
+             function deleteuser(userid) {
+                 axios.delete(`https://crudcrud.com/api/2f49d64130414fc487204c349e1faf52/formcreate/${userid}`)
+                 .then((response) => {
+                removeuserfromscreen(userid);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+        function removeuserfromscreen(userid) {
+        const parentnode = document.getElementById('listofitems');
+        const childnodetobedeleted = document.getElementById(userid);
+        if (childnodetobedeleted) {
+            parentnode.removeChild(childnodetobedeleted);
         }
+    }
+
+
+
+              //const editbtn = document.createElement('input');
+              //editbtn.type = 'button';
+              //editbtn.value = 'Edit';
+              //editbtn.onclick = () => {
+               // localStorage.removeItem(obj.username);
+               // parentelem.removeChild(childelem);
+
+                //document.getElementById("fname").value = obj.username;
+                //document.getElementById("email").value = obj.useremail
+                //document.getElementById("pword").value = obj.userpassword;
+                //document.getElementById("dword").value = obj.datetime;
+             
+              //childelem.appendChild(deletebtn);
+             // childelem.appendChild(editbtn);
+             // parentelem.appendChild(childelem);
+        
         
 
     </script>
