@@ -96,7 +96,8 @@
         const parentelem = document.getElementById('listofitems');
         const childelem = `<li id="${obj._id}"> username: ${obj.username}  useremail: ${obj.useremail}  userpassword: ${obj.userpassword}
               userdatetime: ${obj.userdatetime} <button onclick="deleteuser('${obj._id}')">Delete</button>
-              <button onclick="edituser('${obj._id}')">Edit</button></li>`;
+              <button onclick="edituser('${obj.username}','${obj.useremail}','${obj.userpassword}','${obj.userdatetime}','${obj._id}')">
+                Edit</button></li>`;
 
         parentelem.innerHTML += childelem;
     }
@@ -108,6 +109,57 @@
                // localStorage.removeItem(obj.username);
                // parentelem.removeChild(childelem);
              // }
+
+             function edituser(name, email, pword, dword, userid){
+                document.getElementById('fname').value = name;
+                document.getElementById('email').value = email;
+                document.getElementById('pword').value = pword;
+                document.getElementById('dword').value = dword;
+
+                deleteuser(userid);
+                /* // Update the form fields with the existing user data
+    document.getElementById('fname').value = name;
+    document.getElementById('email').value = email;
+    document.getElementById('pword').value = pword;
+    document.getElementById('dword').value = dword;
+
+    // Attach an event listener to the form for submission with the updated data
+    const form = document.querySelector('form');
+    form.removeEventListener('submit', savetolocalstorage); // Remove the existing listener
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get the updated data from the form
+        const updatedName = event.target.fname.value;
+        const updatedEmail = event.target.email.value;
+        const updatedPassword = event.target.pword.value;
+        const updatedDatetime = event.target.dword.value;
+
+        // Make a PUT request to update the user
+        axios.put(`https://crudcrud.com/api/2f49d64130414fc487204c349e1faf52/formcreate/${userid}`, {
+                username: updatedName,
+                useremail: updatedEmail,
+                userpassword: updatedPassword,
+                userdatetime: updatedDatetime
+            })
+            .then((response) => {
+                // Update the user on the screen
+                removeuserfromscreen(userid);
+                showuseronscreen(response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+
+    // Change the text on the submit button
+    const submitButton = document.getElementById('submit');
+    submitButton.value = 'Update';
+}
+
+// Add this line to your window.addEventListener block to call the edituser function with the proper arguments
+// edituser(name, email, password, datetime, userid);*/
+             }
 
              function deleteuser(userid) {
                  axios.delete(`https://crudcrud.com/api/2f49d64130414fc487204c349e1faf52/formcreate/${userid}`)
