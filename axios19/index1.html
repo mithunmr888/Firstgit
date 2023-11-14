@@ -66,7 +66,7 @@
 
             axios.post("https://crudcrud.com/api/2f49d64130414fc487204c349e1faf52/formcreate", obj)
             .then((response) => {
-                console.log(response);
+                //console.log(response);
                 showuseronscreen(response.data);
             })
             .catch((err) => {
@@ -76,6 +76,21 @@
                 
 
         }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            axios.get("https://crudcrud.com/api/2f49d64130414fc487204c349e1faf52/formcreate")
+            .then((response) => {
+                //console.log(response);
+
+                for(let i=0; i<response.data.length; i++){
+                    showuseronscreen(response.data[i]);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+        })
 
         function showuseronscreen(obj){
             const parentelem = document.getElementById('listofitems');
