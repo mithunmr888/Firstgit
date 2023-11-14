@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            background-color: blanchedalmond;
+            text-align: center;
+            border: 6px;
+        }
+        input{
+            font-size: 30px;
+            border: 10px brown;
+            color: black;
+            width: 900px;
+            margin: 10px;
+            padding: 1px;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(203, 185, 157);">
+    <form onsubmit="savetolocalstorage(event)">
+        <fieldset>
+            <legend>Book a call</legend>
+            <label for="fname">User Name:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="email">email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="pword">Password:</label><br>
+            <input type="password" id="pword" name="pword"><br>
+            <label for="dword">Date and Time for Call:</label><br>
+            <input type="datetime-local" id="dword" name="dword" style="font-size: 30px;"><br>
+            <label for="submit">Submit:</label><br>
+            <input type="submit" id="submit" name="submit" value="Get a call"><br>
+        </fieldset>
+    </form>
+    <ul id="listofitems">
+    </ul>
+    <script>
+        function savetolocalstorage(event){
+            event.preventDefault(); 
+            
+            const name = event.target.fname.value;
+            const email = event.target.email.value;
+            const password = event.target.pword.value;
+            const datetime = event.target.dword.value;
+
+            const obj = {
+                username: name,
+                useremail: email,
+                userpassword: password,
+                userdatetime: datetime
+            }
+            
+            localStorage.setItem(obj.useremail, JSON.stringify(obj));
+            showuseronscreen(obj);
+
+        }
+
+        function showuseronscreen(obj){
+            const parentelem = document.getElementById('listofitems');
+            const childelem = document.createElement('li');
+            childelem.textContent = `username: ${obj.username}  useremail: ${obj.useremail}  userpassword: ${obj.userpassword}
+              userdatetime: ${obj.userdatetime}`
+
+              const deletebtn = document.createElement('input');
+              deletebtn.type = 'button';
+              deletebtn.value = 'Delete';
+              deletebtn.onclick = () => {
+                localStorage.removeItem(obj.username);
+                parentelem.removeChild(childelem);
+              }
+
+              const editbtn = document.createElement('input');
+              editbtn.type = 'button';
+              editbtn.value = 'Edit';
+              editbtn.onclick = () => {
+                localStorage.removeItem(obj.username);
+                parentelem.removeChild(childelem);
+
+                document.getElementById("fname").value = obj.username;
+                document.getElementById("email").value = obj.useremail
+                document.getElementById("pword").value = obj.userpassword;
+                document.getElementById("dword").value = obj.datetime;
+              }
+              childelem.appendChild(deletebtn);
+              childelem.appendChild(editbtn);
+              parentelem.appendChild(childelem);
+        }
+        
+
+    </script>
+</body>
+</html>
